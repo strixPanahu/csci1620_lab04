@@ -49,6 +49,7 @@
 7.) Canvas shows the csv file as separated by tabs, but you should use the default ',’ delimiter.
 
 8.) Use newline='’ to prevent blank rows from being inserted into your csv file 
+	
 	a.) Refer to the explanation of slide 17 ofthe lecture notes. It might appear to have no effect on 		
 		your PC, but you should always write your scripts to accommodate issues it might encounter 
 		on other OS systems.
