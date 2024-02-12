@@ -17,6 +17,8 @@ def main():
 
     output_to_csv(emails_dict)
 
+    output_to_txt(emails_dict)
+
 
 def read_txt():
     inbound_name = "input.txt"
@@ -31,7 +33,9 @@ def read_txt():
 
 
 def convert_raw_to_dict(raw_input):
-    return [{"Email": "", "Day": "", "Date": "", "Month": "", "Year": "", "Time":""}]
+    return [{"Email": "", "Day": "", "Date": "", "Month": "", "Year": "", "Time": ""}]
+
+    # Todo: See Step 2-a
 
 
 def output_to_csv(emails_dict):
@@ -45,6 +49,27 @@ def output_to_csv(emails_dict):
             writer.writerow(message)
 
         outbound_file.close()
+
+
+def output_to_txt(emails_dict):
+    outbound_name = "output.txt"
+    totals = get_message_totals(emails_dict)
+
+    # Todo: See Step 2-b & 8-b
+
+
+def get_message_totals(emails_dict):
+    totals = {}
+    for message in emails_dict:
+        current_email = message.get("Email")
+
+        if current_email in totals:
+            current_total = totals.get(message.get("Email")) + 1
+            totals.update({current_email: current_total})
+        else:
+            totals.update({current_email: 1})
+
+    return totals
 
 
 if __name__ == '__main__':

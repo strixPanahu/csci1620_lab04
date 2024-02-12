@@ -29,7 +29,7 @@
 		- [ ] i.) Extract the email address, include Colon as part of the word 
 			* e.g. lines that begin with From without a colon at the end
 			
-		- [ ] ii.) Keep track of how many ... email is sent from a ... address with ... a dictionary.
+		- [x] ii.) Keep track of how many ... email is sent from a ... address with ... a dictionary.
 		
 		- [ ] iii.) Send your dictionary results to an output file called output.txt. 
 			* This output.txt file should be stored in the same location as the script file.
