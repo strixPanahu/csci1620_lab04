@@ -31,7 +31,7 @@
 			
 		- [x] ii.) Keep track of how many ... email is sent from a ... address with ... a dictionary.
 		
-		- [ ] iii.) Send your dictionary results to an output file called output.txt. 
+		- [x] iii.) Send your dictionary results to an output file called output.txt. 
 			* This output.txt file should be stored in the same location as the script file.
 			
 		- [ ] iv.) The contents of your output.txt file should be identical to sample.txt
