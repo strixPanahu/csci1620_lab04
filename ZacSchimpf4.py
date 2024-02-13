@@ -33,7 +33,7 @@ def read_txt():
 
 
 def convert_raw_to_dict(raw_input):
-    return [{"Email": "", "Day": "", "Date": "", "Month": "", "Year": "", "Time": ""}]
+    return [{"Email": "123", "Day": "", "Date": "", "Month": "", "Year": "", "Time": ""}, {"Email": "456", "Day": "", "Date": "", "Month": "", "Year": "", "Time": ""}]
 
     # Todo: See Step 2-a
 
@@ -54,6 +54,11 @@ def output_to_csv(emails_dict):
 def output_to_txt(emails_dict):
     outbound_name = "output.txt"
     totals = get_message_totals(emails_dict)
+
+    with open(outbound_name, 'w') as outbound_file:
+        outbound_file.write(str(totals))
+
+        outbound_file.close()
 
     # Todo: See Step 2-b & 8-b
 
