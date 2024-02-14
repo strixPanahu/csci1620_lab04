@@ -25,8 +25,8 @@
 		- [ ] iii.) The contents of your output.csv file should be identical to sample.csv
 			* include the header row
 			
-	- [ ] b.) If a line begins with From: (use regular expressions to find the lines)
-		- [ ] i.) Extract the email address, include Colon as part of the word 
+	- [x] b.) If a line begins with From: (use regular expressions to find the lines)
+		- [x] i.) Extract the email address, include Colon as part of the word 
 			* e.g. lines that begin with From without a colon at the end
 			
 		- [x] ii.) Keep track of how many ... email is sent from a ... address with ... a dictionary.
