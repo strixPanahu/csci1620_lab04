@@ -14,7 +14,7 @@
 
 from csv import DictWriter
 from datetime import datetime
-from os import getcwd
+from os import getcwd, linesep
 from re import search
 from sys import exit
 
@@ -111,15 +111,15 @@ def output_to_txt(emails_dict):
 
     with open(outbound_name, 'w', newline='') as outbound_file:
         # header
-        outbound_file.write(f"{'Email':<40}{'- Count'}" + '\n')
+        outbound_file.write(f"{'Email':<40}{'- Count' + linesep}")
 
         # summary
         for email, quantity in summary.items():
-            outbound_file.write(f"{email + ':':<40}{'- ' + str(quantity)}" + '\n')
+            outbound_file.write(f"{email + ':':<40}{'- ' + str(quantity) + linesep}")
             total += quantity
 
         # eof
-        outbound_file.write(f"{' ':->46}" + '\n')  # break = len(header)
+        outbound_file.write(f"{' ':->46}{linesep}")  # break = len(header)
         outbound_file.write(f"{'Total:':<40}{'- ' + str(quantity)}")
 
         outbound_file.close()
