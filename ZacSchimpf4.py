@@ -3,6 +3,13 @@
     Professor Owora
     Week 04 - Lab 04
     12/02/2024
+
+    Todo:
+        Separate datetime
+        Sort methods
+        Add docstrings
+        Optimise regex
+        Unit Tests
 """
 
 from csv import DictWriter
@@ -13,6 +20,7 @@ from sys import exit
 
 
 def main():
+
     raw_input = read_txt()
 
     emails_dict = convert_raw_to_dict(raw_input)
