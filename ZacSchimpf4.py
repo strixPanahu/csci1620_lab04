@@ -53,18 +53,32 @@ def output_to_csv(emails_dict):
 
 def output_to_txt(emails_dict):
     outbound_name = "output.txt"
-    totals = get_message_totals(emails_dict)
+    summary = get_message_summary(emails_dict)
+    page_width = "40"
 
-    with open(outbound_name, 'w') as outbound_file:
-        outbound_file.write(str(totals))
+    total = 0
+
+    with open(outbound_name, 'w', newline='') as outbound_file:
+        # header
+        outbound_file.write(f"{"Email":<40}{"- Count\n"}")
+
+        # summary
+        for email, quantity in summary.items():
+            outbound_file.write(f"{email + ":":<40}{"- " + str(quantity) + '\n'}")
+            total += quantity
+
+        # eof
+        outbound_file.write(f"{'\n':->47}")  # break = len(header)
+        outbound_file.write(f"{"Total:":<40}{"- " + str(quantity)}")
 
         outbound_file.close()
 
     # Todo: See Step 2-b & 8-b
 
 
-def get_message_totals(emails_dict):
+def get_message_summary(emails_dict):
     totals = {}
+
     for message in emails_dict:
         current_email = message.get("Email")
 
@@ -73,8 +87,9 @@ def get_message_totals(emails_dict):
             totals.update({current_email: current_total})
         else:
             totals.update({current_email: 1})
-
+            
     return totals
+
 
 
 if __name__ == '__main__':

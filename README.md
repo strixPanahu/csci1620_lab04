@@ -22,7 +22,7 @@
 		- [ ] ii.) Send the details to a csv file named output.csv with the help of csv methods. 
 			* This output.csv file should be stored in the same location as the script file.
 			
-		- [ ] iii.) The contents ofyour output.csv file should be identical to sample.csv
+		- [ ] iii.) The contents of your output.csv file should be identical to sample.csv
 			* include the header row
 			
 	- [ ] b.) If a line begins with From: (use regular expressions to find the lines)
@@ -34,7 +34,7 @@
 		- [x] iii.) Send your dictionary results to an output file called output.txt. 
 			* This output.txt file should be stored in the same location as the script file.
 			
-		- [ ] iv.) The contents of your output.txt file should be identical to sample.txt
+		- [x] iv.) The contents of your output.txt file should be identical to sample.txt
 			* Include the last row showing total email count
 	
 	
@@ -52,10 +52,10 @@
 
 - [x] 8.) Use newline='’ to prevent blank rows from being inserted into your csv file 
 	
-	- [x] a.) Refer to the explanation of slide 17 ofthe lecture notes. It might appear to have no effect on 		
+	- [x] a.) Refer to the explanation of slide 17 of the lecture notes. It might appear to have no effect on 		
 		your PC, but you should always write your scripts to accommodate issues it might encounter 
 		on other OS systems.
 			
-	- [ ] b.) I used 40 spaces for the email fields (e.g., file.write(f'{“Email”:40s} —Count \n’)) to achieve 
+	- [x] b.) I used 40 spaces for the email fields (e.g., file.write(f'{“Email”:40s} —Count \n’)) to achieve 
 		uniform formatting. This is preferable to using tab spaces as tab spaces might not be consistent 
 		across different systems (Refer to your week 2 string notes for details on this).
