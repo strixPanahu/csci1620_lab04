@@ -5,11 +5,12 @@
     12/02/2024
 """
 
-import csv
-import datetime
-import os
-import re
-import sys
+from csv import DictWriter
+from datetime import datetime
+from os import getcwd
+from re import search
+from sys import exit
+
 
 def main():
     raw_input = read_txt()
@@ -28,7 +29,7 @@ def read_txt():
             lines = inbound_file.readlines()
         inbound_file.close()
     except FileNotFoundError:
-        sys.exit("Invalid request for file_name \"" + inbound_name + "\" at \"" + os.getcwd() + "\"")
+        exit("Invalid request for file_name \"" + inbound_name + "\" at \"" + getcwd() + "\"")
 
     return lines
 
@@ -41,7 +42,7 @@ def convert_raw_to_dict(raw_input):
 
         if sender is None:  # seek sender
             try:
-                result = re.search(r".*From: (.*)", line)
+                result = search(r".*From: (.*)", line)
                 index = result.start() + len("From: ")
                 sender = line[index:].strip()
             except AttributeError:
@@ -49,7 +50,7 @@ def convert_raw_to_dict(raw_input):
 
         else:  # seek time
             try:
-                result = re.search(r".*X-DSPAM-Processed: (.*)", line)
+                result = search(r".*X-DSPAM-Processed: (.*)", line)
                 index = result.start() + len("X-DSPAM-Processed: ") + len("Day ")
                 timestamp_str = line[index:].strip()
 
@@ -78,14 +79,14 @@ def convert_str_to_datetime(timestamp_str):
 
     year = int(timestamp_list[3])
 
-    return datetime.datetime(year, month, day, hour, minute, second)
+    return datetime(year, month, day, hour, minute, second)
 
 
 def output_to_csv(emails_dict):
     outbound_name = "output.csv"
     header = [f"Email", f"Timestamp"]
     with open(outbound_name, 'w', newline='') as outbound_file:
-        writer = csv.DictWriter(outbound_file, fieldnames=header, delimiter=',')
+        writer = DictWriter(outbound_file, fieldnames=header, delimiter=',')
         writer.writeheader()
 
         for message in emails_dict:
