@@ -16,10 +16,10 @@
 - [ ] 2.) Write a program that will go through the lines in input.txt:
 
 	- [ ] a.) If a line begins with From, use regex to find the lines
-		- [ ] i.) Extract the email address, day, date, month, year, and time; 
+		- [x] i.) Extract the email address, day, date, month, year, and time; 
 			* There should be a space after the word “From ” to avoid logic errors
 			
-		- [ ] ii.) Send the details to a csv file named output.csv with the help of csv methods. 
+		- [x] ii.) Send the details to a csv file named output.csv with the help of csv methods. 
 			* This output.csv file should be stored in the same location as the script file.
 			
 		- [ ] iii.) The contents of your output.csv file should be identical to sample.csv
