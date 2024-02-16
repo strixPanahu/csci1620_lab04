@@ -20,13 +20,9 @@ from sys import exit
 
 
 def main():
-
     raw_input = read_txt()
-
     emails_dict = convert_raw_to_dict(raw_input)
-
     output_to_csv(emails_dict)
-
     output_to_txt(emails_dict)
 
 
@@ -43,6 +39,7 @@ def read_txt():
 
 
 def convert_raw_to_dict(raw_input):
+    day_format = (None, "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
     emails_dict = []
     sender = None
 
@@ -64,7 +61,11 @@ def convert_raw_to_dict(raw_input):
 
                 timestamp_dt = convert_str_to_datetime(timestamp_str)
 
-                emails_dict.append({"Email": sender, "Timestamp": timestamp_dt})
+                emails_dict.append({"Email": sender,
+                                    "Day": day_format[timestamp_dt.weekday()],
+                                    "Date": timestamp_dt.day,
+                                    "Month": timestamp_dt.month,
+                                    "Year": timestamp_dt.year})
 
                 sender = None
             except AttributeError:
@@ -76,8 +77,8 @@ def convert_raw_to_dict(raw_input):
 def convert_str_to_datetime(timestamp_str):
     timestamp_list = timestamp_str.split()
 
-    months_format = [None, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    month = int(months_format.index(timestamp_list[0]))
+    months_format = (None, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+    month = months_format.index(timestamp_list[0])
 
     day = int(timestamp_list[1])
 
@@ -92,22 +93,19 @@ def convert_str_to_datetime(timestamp_str):
 
 def output_to_csv(emails_dict):
     outbound_name = "output.csv"
-    header = [f"Email", f"Timestamp"]
+    header = list(emails_dict[0].keys())
+
     with open(outbound_name, 'w', newline='') as outbound_file:
         writer = DictWriter(outbound_file, fieldnames=header, delimiter=',')
         writer.writeheader()
-
-        for message in emails_dict:
-            writer.writerow(message)
-
+        writer.writerows(emails_dict)
         outbound_file.close()
 
 
 def output_to_txt(emails_dict):
     outbound_name = "output.txt"
-    total = 0
-
     summary = get_message_summary(emails_dict)
+    total = 0
 
     with open(outbound_name, 'w', newline='') as outbound_file:
         # header

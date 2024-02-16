@@ -13,9 +13,9 @@
 - [x] 1.) Download input.txt and store it in the same location as the script file.
 
 
-- [ ] 2.) Write a program that will go through the lines in input.txt:
+- [x] 2.) Write a program that will go through the lines in input.txt:
 
-	- [ ] a.) If a line begins with From, use regex to find the lines
+	- [x] a.) If a line begins with From, use regex to find the lines
 		- [x] i.) Extract the email address, day, date, month, year, and time; 
 			* There should be a space after the word “From ” to avoid logic errors
 			
