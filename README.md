@@ -22,7 +22,7 @@
 		- [x] ii.) Send the details to a csv file named output.csv with the help of csv methods. 
 			* This output.csv file should be stored in the same location as the script file.
 			
-		- [ ] iii.) The contents of your output.csv file should be identical to sample.csv
+		- [x] iii.) The contents of your output.csv file should be identical to sample.csv
 			* include the header row
 			
 	- [x] b.) If a line begins with From: (use regular expressions to find the lines)

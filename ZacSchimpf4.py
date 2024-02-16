@@ -3,13 +3,6 @@
     Professor Owora
     Week 04 - Lab 04
     12/02/2024
-
-    Todo:
-        Separate datetime
-        Sort methods
-        Add docstrings
-        Optimise regex
-        Unit Tests
 """
 
 from csv import DictWriter
@@ -20,6 +13,11 @@ from sys import exit
 
 
 def main():
+    """
+    Primary logic flow; cli-callable function
+    :return: None
+    """
+
     raw_input = read_txt()
     emails_dict = convert_raw_to_dict(raw_input)
     output_to_csv(emails_dict)
@@ -27,6 +25,11 @@ def main():
 
 
 def read_txt():
+    """
+    Reads working directory "input.txt"
+    :return: A list[] containing each newline separated string
+    """
+
     inbound_name = "input.txt"
     try:
         with open(inbound_name) as inbound_file:
@@ -39,6 +42,12 @@ def read_txt():
 
 
 def convert_raw_to_dict(raw_input):
+    """
+    Clean list[] of email logs to contain only sender & timestamp
+    :param raw_input A list[] of the input file's lines
+    :return List{Email, Day, Date, Month, Year, Time}
+    """
+
     day_format = (None, "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
     emails_dict = []
     sender = None
@@ -65,7 +74,8 @@ def convert_raw_to_dict(raw_input):
                                     "Day": day_format[timestamp_dt.weekday()],
                                     "Date": timestamp_dt.day,
                                     "Month": timestamp_dt.month,
-                                    "Year": timestamp_dt.year})
+                                    "Year": timestamp_dt.year,
+                                    "Time": timestamp_dt.time()})
 
                 sender = None
             except AttributeError:
@@ -75,6 +85,12 @@ def convert_raw_to_dict(raw_input):
 
 
 def convert_str_to_datetime(timestamp_str):
+    """
+    Cleans a string containing a log file's timestamp
+    :param timestamp_str An unformatted timestamp; e.g. e.g. Sat Jan  5 09:14:16 2008
+    :return Datetime object containing the converted timestamp
+    """
+
     timestamp_list = timestamp_str.split()
 
     months_format = (None, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
@@ -92,6 +108,12 @@ def convert_str_to_datetime(timestamp_str):
 
 
 def output_to_csv(emails_dict):
+    """
+    Write a List[{}, {}] to a csv file in the current working directory, named output.csv
+    :param emails_dict A list containing dictionaries
+    :return None
+    """
+
     outbound_name = "output.csv"
     header = list(emails_dict[0].keys())
 
@@ -103,6 +125,12 @@ def output_to_csv(emails_dict):
 
 
 def output_to_txt(emails_dict):
+    """
+    Write a List[{}, {}] to a txt file in the current working directory, named output.txt
+    :param emails_dict: A list containing dictionaries
+    :return: None
+    """
+
     outbound_name = "output.txt"
     summary = get_message_summary(emails_dict)
     total = 0
@@ -124,6 +152,12 @@ def output_to_txt(emails_dict):
 
 
 def get_message_summary(emails_dict):
+    """
+    Creates a summary of a list of emails, such as totals for each address.
+    :param emails_dict: A list containing dictionaries
+    :return: A dictionary containing how many messages each email sent
+    """
+
     totals = {}
 
     for message in emails_dict:
