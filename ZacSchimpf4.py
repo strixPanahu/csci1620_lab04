@@ -63,7 +63,17 @@ def convert_raw_to_dict(raw_input):
                 pass
 
         else:  # seek time
-            try:
+            try:  # verify the timestamp has not been skipped
+                test = search(r".*From: (.*)", line)
+                if test is not None:
+                    exit(sender + " does not have a succeeding timestamp;" +
+                                  " log convention is as follows " +
+                                  "\"X-DSPAM-Processed: Sun Jan  1 12:00:00 1999\"")
+
+            except AttributeError:
+                pass
+
+            try:  # else check for conventional attribute
                 result = search(r".*X-DSPAM-Processed: (.*)", line)
                 index = result.start() + len("X-DSPAM-Processed: ") + len("Day ")
                 timestamp_str = line[index:].strip()
@@ -87,22 +97,25 @@ def convert_raw_to_dict(raw_input):
 def convert_str_to_datetime(timestamp_str):
     """
     Cleans a string containing a log file's timestamp
-    :param timestamp_str An unformatted timestamp; e.g. e.g. Sat Jan  5 09:14:16 2008
+    :param timestamp_str: An unformatted timestamp; e.g. e.g. Sat Jan  5 09:14:16 2008
     :return Datetime object containing the converted timestamp
     """
 
+    months_format = (None, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
     timestamp_list = timestamp_str.split()
 
-    months_format = (None, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-    month = months_format.index(timestamp_list[0])
+    try:
+        month = months_format.index(timestamp_list[0])
 
-    day = int(timestamp_list[1])
+        day = int(timestamp_list[1])
 
-    hour = int(timestamp_list[2][:2])
-    minute = int(timestamp_list[2][3:5])
-    second = int(timestamp_list[2][6:])
+        hour = int(timestamp_list[2][:2])
+        minute = int(timestamp_list[2][3:5])
+        second = int(timestamp_list[2][6:])
 
-    year = int(timestamp_list[3])
+        year = int(timestamp_list[3])
+    except ValueError:
+        exit(timestamp_str + " does not follow log convention of \"Sun Jan  1 12:00:00 1999\"")
 
     return datetime(year, month, day, hour, minute, second)
 
