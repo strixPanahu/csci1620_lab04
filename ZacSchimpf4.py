@@ -111,9 +111,11 @@ def convert_str_to_datetime(timestamp_str):
 
         day = int(timestamp_list[1])
 
-        hour = int(timestamp_list[2][:2])
-        minute = int(timestamp_list[2][3:5])
-        second = int(timestamp_list[2][6:])
+        time = str(timestamp_list[2])
+        time = time.split(':')
+        hour = int(time[0])
+        minute = int(time[1])
+        second = int(time[2])
 
         year = int(timestamp_list[3])
     except ValueError:
