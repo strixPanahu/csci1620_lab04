@@ -3,6 +3,8 @@
     Professor Owora
     Week 04 - Lab 04
     12/02/2024
+
+    https://github.com/strixPanahu/csci1620_lab04
 """
 
 from csv import DictWriter
