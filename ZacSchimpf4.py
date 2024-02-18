@@ -47,7 +47,7 @@ def convert_raw_to_dict(raw_input):
     """
     Clean list[] of email logs to contain only sender & timestamp
     :param raw_input A list[] of the input file's lines
-    :return List{Email, Day, Date, Month, Year, Time}
+    :return [{Email, Day, Date, Month, Year, Time}, {etc. }]
     """
 
     day_format = (None, "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
@@ -163,7 +163,7 @@ def output_to_txt(emails_dict):
 
         # eof
         outbound_file.write(f"{' ':->46}{linesep}")  # break = len(header)
-        outbound_file.write(f"{'Total:':<40}{'- ' + str(quantity)}")
+        outbound_file.write(f"{'Total:':<40}{'- ' + str(total)}")
 
         outbound_file.close()
 
