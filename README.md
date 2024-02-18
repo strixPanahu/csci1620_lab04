@@ -68,10 +68,10 @@
 
   - [ ] b.) Logic error in retrieving values for csv file - days are off
   
-- [ ] 10.) output.txt 
+- [x] 10.) output.txt 
 
-    - [ ] a.) Logic error in counting the emails
+    - [x] a.) Logic error in counting the emails
 
 - [ ] 11.) if file is opened using with, it is automatically closed when exiting that block of code. a file.close() statement is not needed.
 
-- [ ] 12.) newline='' is not needed when working with text files.
+- [x] 12.) newline='' is not needed when working with text files.

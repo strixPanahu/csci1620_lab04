@@ -138,7 +138,6 @@ def output_to_csv(emails_dict):
         writer = DictWriter(outbound_file, fieldnames=header, delimiter=',')
         writer.writeheader()
         writer.writerows(emails_dict)
-        outbound_file.close()
 
 
 def output_to_txt(emails_dict):
@@ -152,7 +151,7 @@ def output_to_txt(emails_dict):
     summary = get_message_summary(emails_dict)
     total = 0
 
-    with open(outbound_name, 'w', newline='') as outbound_file:
+    with open(outbound_name, 'w') as outbound_file:
         # header
         outbound_file.write(f"{'Email':<40}{'- Count' + linesep}")
 
@@ -164,8 +163,6 @@ def output_to_txt(emails_dict):
         # eof
         outbound_file.write(f"{' ':->46}{linesep}")  # break = len(header)
         outbound_file.write(f"{'Total:':<40}{'- ' + str(total)}")
-
-        outbound_file.close()
 
 
 def get_message_summary(emails_dict):
