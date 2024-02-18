@@ -62,16 +62,16 @@
 
 
 ## Feedback 2/18:
-- [ ] 9.) output.csv
+- [x] 9.) output.csv
 
-  - [ ] a.) Didn’t use regular expressions to extract lines that begin with “From “ 
+  - [x] a.) Didn’t use regular expressions to extract lines that begin with “From “ 
 
-  - [ ] b.) Logic error in retrieving values for csv file - days are off
+  - [x] b.) Logic error in retrieving values for csv file - days are off
   
 - [x] 10.) output.txt 
 
     - [x] a.) Logic error in counting the emails
 
-- [ ] 11.) if file is opened using with, it is automatically closed when exiting that block of code. a file.close() statement is not needed.
+- [x] 11.) if file is opened using with, it is automatically closed when exiting that block of code. a file.close() statement is not needed.
 
 - [x] 12.) newline='' is not needed when working with text files.

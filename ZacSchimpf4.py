@@ -23,7 +23,7 @@ def main():
     raw_input = read_txt()
     emails_dict = convert_raw_to_dict(raw_input)
     output_to_csv(emails_dict)
-    output_to_txt(emails_dict)
+    output_to_txt(raw_input)
 
 
 def read_txt():
@@ -52,74 +52,50 @@ def convert_raw_to_dict(raw_input):
 
     day_format = (None, "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
     emails_dict = []
-    sender = None
 
     for line in raw_input:
+        try:
+            if search(r".*From (.*)", line):
+                line = line.rstrip().split()
+                del line[0]  # rm ["From", ]
 
-        if sender is None:  # seek sender
-            try:
-                result = search(r".*From: (.*)", line)
-                index = result.start() + len("From: ")
-                sender = line[index:].strip()
-            except AttributeError:
-                pass
+                sender = line[0]
+                del line[:2]  # rm [Email, Day, ]
 
-        else:  # seek time
-            try:  # verify the timestamp has not been skipped
-                test = search(r".*From: (.*)", line)
-                if test is not None:
-                    exit(sender + " does not have a succeeding timestamp;" +
-                                  " log convention is as follows " +
-                                  "\"X-DSPAM-Processed: Sun Jan  1 12:00:00 1999\"")
-
-            except AttributeError:
-                pass
-
-            try:  # else check for conventional attribute
-                result = search(r".*X-DSPAM-Processed: (.*)", line)
-                index = result.start() + len("X-DSPAM-Processed: ") + len("Day ")
-                timestamp_str = line[index:].strip()
-
-                timestamp_dt = convert_str_to_datetime(timestamp_str)
-
+                timestamp_dt = convert_str_to_datetime(line)
                 emails_dict.append({"Email": sender,
                                     "Day": day_format[timestamp_dt.weekday()],
                                     "Date": timestamp_dt.day,
                                     "Month": timestamp_dt.month,
                                     "Year": timestamp_dt.year,
                                     "Time": timestamp_dt.time()})
-
-                sender = None
-            except AttributeError:
-                pass
+        except AttributeError:
+            pass
 
     return emails_dict
 
 
-def convert_str_to_datetime(timestamp_str):
+def convert_str_to_datetime(timestamp):
     """
     Cleans a string containing a log file's timestamp
-    :param timestamp_str: An unformatted timestamp; e.g. e.g. Sat Jan  5 09:14:16 2008
+    :param timestamp: [Mon, Date, Time, Year], e.g. ["Jan", "1"," "12:00:00", "1999"]
     :return Datetime object containing the converted timestamp
     """
-
     months_format = (None, "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-    timestamp_list = timestamp_str.split()
 
     try:
-        month = months_format.index(timestamp_list[0])
+        month = months_format.index(timestamp[0])
 
-        day = int(timestamp_list[1])
+        day = int(timestamp[1])
 
-        time = str(timestamp_list[2])
-        time = time.split(':')
+        time = str(timestamp[2]).split(':')
         hour = int(time[0])
         minute = int(time[1])
         second = int(time[2])
 
-        year = int(timestamp_list[3])
+        year = int(timestamp[3])
     except ValueError:
-        exit(timestamp_str + " does not follow log convention of \"Sun Jan  1 12:00:00 1999\"")
+        exit(timestamp + " does not follow log convention of \"[Jan,  1, 12:00:00, 1999]\"")
 
     return datetime(year, month, day, hour, minute, second)
 
@@ -140,15 +116,15 @@ def output_to_csv(emails_dict):
         writer.writerows(emails_dict)
 
 
-def output_to_txt(emails_dict):
+def output_to_txt(raw_input):
     """
     Write a List[{}, {}] to a txt file in the current working directory, named output.txt
-    :param emails_dict: A list containing dictionaries
+    :param raw_input: A string converted copy of the log
     :return: None
     """
 
     outbound_name = "output.txt"
-    summary = get_message_summary(emails_dict)
+    summary = get_log_summary(raw_input)
     total = 0
 
     with open(outbound_name, 'w') as outbound_file:
@@ -165,23 +141,28 @@ def output_to_txt(emails_dict):
         outbound_file.write(f"{'Total:':<40}{'- ' + str(total)}")
 
 
-def get_message_summary(emails_dict):
+def get_log_summary(raw_input):
     """
     Creates a summary of a list of emails, such as totals for each address.
-    :param emails_dict: A list containing dictionaries
+    :param raw_input: A string converted copy of the log
     :return: A dictionary containing how many messages each email sent
     """
 
     totals = {}
 
-    for message in emails_dict:
-        current_email = message.get("Email")
+    for line in raw_input:
+        try:
+            if search(r".*From:(.*)", line):
+                line = line.rstrip().split()
 
-        if current_email in totals:
-            current_total = totals.get(message.get("Email")) + 1
-            totals.update({current_email: current_total})
-        else:
-            totals.update({current_email: 1})
+                if line[1] in totals:
+                    new_total = totals.get(line[1]) + 1
+                    totals.update({line[1]: new_total})
+                else:
+                    totals.update({line[1]: 1})
+
+        except AttributeError:
+            pass
             
     return totals
 
