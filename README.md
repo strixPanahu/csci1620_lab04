@@ -59,3 +59,19 @@
 	- [x] b.) I used 40 spaces for the email fields (e.g., file.write(f'{“Email”:40s} —Count \n’)) to achieve 
 		uniform formatting. This is preferable to using tab spaces as tab spaces might not be consistent 
 		across different systems (Refer to your week 2 string notes for details on this).
+
+
+## Feedback 2/18:
+- [ ] 9.) output.csv
+
+  - [ ] a.) Didn’t use regular expressions to extract lines that begin with “From “ 
+
+  - [ ] b.) Logic error in retrieving values for csv file - days are off
+  
+- [ ] 10.) output.txt 
+
+    - [ ] a.) Logic error in counting the emails
+
+- [ ] 11.) if file is opened using with, it is automatically closed when exiting that block of code. a file.close() statement is not needed.
+
+- [ ] 12.) newline='' is not needed when working with text files.
